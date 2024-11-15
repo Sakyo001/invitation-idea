@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Date</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6b6b, #ffd3d3);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .question {
+            font-size: 2.5rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: #ff4d6d;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        /* Wave effect */
+        .btn::after {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                white,
+                transparent
+            );
+            transition: 0.7s;
+            z-index: 1;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn:hover {
+            transition-delay: 0.3s;
+            background: white;
+            color: #ff4d6d;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        /* Reset the wave position instantly when not hovering */
+        .btn:not(:hover)::after {
+            left: -100%;
+            transition: none;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 25px rgba(255, 77, 109, 0.5);
+            }
+            100% {
+                box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            }
+        }
+
+        .btn {
+            animation: pulse 2s infinite;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(255, 77, 109, 0.3);
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            opacity: 0.1;
+            animation: floatUpward 6s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+            font-size: 1rem;
+        }
+
+        @keyframes floatUpward {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0.05;
+            }
+            50% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .speech-bubble {
+            position: relative;
+            background: #fff;
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+        }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: #fff transparent transparent;
+        }
+
+        .happy-message {
+            font-size: 2.5rem;
+            color: #f7f5f5;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .click-me-btn {
+            background: #ff4d6d;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            width: 90%;
+            max-width: 600px;
+            font-family: monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .click-me-btn::before {
+            content: '──■■██░░░─♡─CLICK ME─♡─░░░██■■──';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+        }
+
+        /* Wave effect */
+        .click-me-btn::after {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                white,
+                transparent
+            );
+            transition: 0.7s;
+            z-index: 1;
+        }
+
+        /* Floating hearts */
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .heart-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 3rem;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .click-me-btn:hover {
+            transition-delay: 0.3s;
+            background: white;
+        }
+
+        .click-me-btn:hover::before {
+            transition-delay: 0.3s;
+            color: #ff4d6d;
+        }
+
+        .click-me-btn:hover::after {
+            left: 100%;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 25px rgba(255, 77, 109, 0.5);
+            }
+            100% {
+                box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            }
+        }
+
+        .click-me-btn {
+            animation: pulse 2s infinite;
+        }
+
+        .click-me-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(255, 77, 109, 0.3);
+        }
+
+        /* Mobile-specific adjustments */
+        @media screen and (max-width: 768px) {
+            .click-me-btn {
+                font-size: 0.9rem;
+                padding: 12px 20px;
+                letter-spacing: 1px;
+                width: 85%;
+            }
+
+            .click-me-btn::before {
+                content: '──■■██─♡─CLICK ME─♡─██■■──';
+                font-size: 0.9rem;
+            }
+
+            /* Adjust floating hearts position for mobile */
+            .floating-heart {
+                font-size: 2.5rem;
+            }
+
+            .heart {
+                font-size: 2.5rem;
+            }
+        }
+
+        .credit {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 0.9rem;
+            color: #ffffff;
+            opacity: 0.8;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+            z-index: 1000;
+        }
+
+        /* Mobile responsiveness for credit */
+        @media screen and (max-width: 768px) {
+            .credit {
+                font-size: 0.8rem;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="question">Would you like to go out with me for a date? 💝</div>
+    
+    <div id="happyCat" style="display: none; text-align: center;">
+        <img src="images/happy.gif" alt="Happy cat" style="width: 300px; border-radius: 10px; margin-bottom: 20px;">
+        <div class="happy-message">YEAYYY!!! DONT GO ANYWHERE</div>
+        <button class="click-me-btn" onmouseover="createHearts(this)" onclick="window.location.href='date.html'">
+            ──■■██░░░─♡─CLICK ME─♡─░░░██■■──
+            <div class="heart-container"></div>
+        </button>
+    </div>
+
+    <div id="sadCat" style="display: none; text-align: center;">
+        <div class="speech-bubble">Really? You're breaking my heart!</div>
+        <img src="images/sad.gif" alt="Sad cat" style="width: 300px; border-radius: 10px;">
+    </div>
+    
+    <div class="buttons">
+        <button class="btn" onclick="showHappyCat()"><span>Yes</span></button>
+        <button class="btn" onclick="showSadCat()"><span>No</span></button>
+    </div>
+
+    <div class="credit">By: Master Sakyo</div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 0.8 + 0.3) + 'rem';
+            heart.style.top = (Math.random() * 100) + 'vh';
+            document.body.appendChild(heart);
+
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Update the heart creation interval
+        function initializeHearts() {
+            // Create initial set of hearts
+            for(let i = 0; i < 10; i++) {
+                createHeart();
+            }
+            
+            // Then start the interval
+            setInterval(createHeart, 500);
+        }
+
+        // Call this immediately when the page loads
+        document.addEventListener('DOMContentLoaded', initializeHearts);
+
+        function showHappyCat() {
+            const questionDiv = document.querySelector('.question');
+            const buttonsDiv = document.querySelector('.buttons');
+            const happyCatDiv = document.getElementById('happyCat');
+            
+            questionDiv.style.display = 'none';
+            buttonsDiv.style.display = 'none';
+            happyCatDiv.style.display = 'block';
+        }
+
+        function showSadCat() {
+            const questionDiv = document.querySelector('.question');
+            const buttonsDiv = document.querySelector('.buttons');
+            const sadCatDiv = document.getElementById('sadCat');
+            
+            questionDiv.style.display = 'none';
+            buttonsDiv.style.display = 'none';
+            sadCatDiv.style.display = 'block';
+            
+            // Show the buttons again after a few seconds
+            setTimeout(() => {
+                questionDiv.style.display = 'block';
+                buttonsDiv.style.display = 'flex';
+                sadCatDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function createHearts(button) {
+            const container = button.querySelector('.heart-container');
+            
+            // Create hearts on both sides
+            for (let side of ['left', 'right']) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+                
+                container.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+        }
+
+        // Create hearts every 300ms while hovering
+        let heartInterval;
+        document.querySelector('.click-me-btn').addEventListener('mouseover', function() {
+            heartInterval = setInterval(() => createHearts(this), 300);
+        });
+
+        document.querySelector('.click-me-btn').addEventListener('mouseout', function() {
+            clearInterval(heartInterval);
+        });
+    </script>
+</body>
+</html>

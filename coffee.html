@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Coffee</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #fff1f4;
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 4px rgba(255, 77, 109, 0.2);
+        }
+
+        .coffee-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .coffee-item {
+            position: relative;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .coffee-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .coffee-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .coffee-item:hover .coffee-image {
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+            border-color: #ff4d6d;
+        }
+
+        .coffee-name {
+            margin-top: 1rem;
+            color: #ff4d6d;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .continue-btn {
+            background: #ff4d6d;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            width: 200px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: block;
+            margin: 3rem auto;
+        }
+
+        .continue-btn::after {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                white,
+                transparent
+            );
+            transition: 0.7s;
+            z-index: 1;
+        }
+
+        .continue-btn:hover {
+            transition-delay: 0.3s;
+            background: white;
+            color: #ff4d6d;
+        }
+
+        .continue-btn:hover::after {
+            left: 100%;
+        }
+
+        .continue-btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Selected state for coffee items */
+        .coffee-item.selected .coffee-image {
+            border-color: #ff4d6d;
+            box-shadow: 0 0 0 4px rgba(255, 77, 109, 0.3);
+        }
+
+        /* Floating coffee cups */
+        .coffee {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            animation: float 1s ease-out forwards;
+            font-size: 3.5rem !important;
+            z-index: 100;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-40px) scale(1.8);
+                opacity: 0;
+            }
+        }
+
+        /* Add background floating coffee cups */
+        .background-coffee {
+            position: fixed;
+            opacity: 0.6;
+            animation: floatUpward 6s ease-in-out infinite;
+            z-index: -1;
+            pointer-events: none;
+            font-size: 2rem !important;
+        }
+
+        @keyframes floatUpward {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(50vh) translateX(15px) rotate(180deg) scale(0.7);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-20vh) translateX(-15px) rotate(360deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            .coffee-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 0 1rem;
+                max-width: 600px;
+            }
+
+            .coffee-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .coffee-name {
+                font-size: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            body {
+                padding: 1rem;
+            }
+
+            .continue-btn {
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
+                margin: 2rem auto;
+            }
+        }
+
+        /* For very small screens */
+        @media screen and (max-width: 400px) {
+            .coffee-image {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        .custom-alert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(255, 77, 109, 0.2);
+            z-index: 1000;
+            animation: slideDown 0.3s ease-out;
+            border: 2px solid #ff4d6d;
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ff4d6d;
+            font-size: 1.1rem;
+        }
+
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .credit {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 0.9rem;
+            color: #ff4d6d;
+            opacity: 0.8;
+            text-shadow: 1px 1px 2px rgba(255, 77, 109, 0.2);
+        }
+
+        /* Mobile responsiveness for credit */
+        @media screen and (max-width: 768px) {
+            .credit {
+                font-size: 0.8rem;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>What coffee do you want to drink ? ☕</h1>
+
+    <div class="coffee-grid">
+        <div class="coffee-item" onclick="selectCoffee(this)">
+            <img src="images/americano.jpg" alt="Americano" class="coffee-image">
+            <div class="coffee-name">Americano</div>
+        </div>
+        <div class="coffee-item" onclick="selectCoffee(this)">
+            <img src="images/latte.jpg" alt="Latte" class="coffee-image">
+            <div class="coffee-name">Latte</div>
+        </div>
+        <div class="coffee-item" onclick="selectCoffee(this)">
+            <img src="images/capp.jpg" alt="Cappuccino" class="coffee-image">
+            <div class="coffee-name">Cappuccino</div>
+        </div>
+        <div class="coffee-item" onclick="selectCoffee(this)">
+            <img src="images/mocca.jpg" alt="Mocha" class="coffee-image">
+            <div class="coffee-name">Mocha</div>
+        </div>
+    </div>
+
+    <button class="continue-btn" onclick="continueTo()">
+        <span>Continue ヾ(>ω< )ノ</span>
+    </button>
+
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-content">
+            <span>🥺</span>
+            <span id="alertMessage"></span>
+        </div>
+    </div>
+
+    <div class="credit">By: Master Sakyo</div>
+
+    <script>
+        let selectedCoffee = null;
+
+        function selectCoffee(element) {
+            if (selectedCoffee) {
+                selectedCoffee.classList.remove('selected');
+            }
+            
+            element.classList.add('selected');
+            selectedCoffee = element;
+            createCoffee(element);
+        }
+
+        function createCoffee(element) {
+            const coffee = document.createElement('div');
+            coffee.className = 'coffee';
+            coffee.innerHTML = '☕';
+            
+            const rect = element.getBoundingClientRect();
+            coffee.style.left = rect.left + rect.width/2 + 'px';
+            coffee.style.top = rect.top + rect.height/2 + 'px';
+            
+            document.body.appendChild(coffee);
+            
+            setTimeout(() => coffee.remove(), 1000);
+        }
+
+        function createBackgroundCoffee() {
+            const coffee = document.createElement('div');
+            coffee.className = 'background-coffee';
+            coffee.innerHTML = '☕';
+            coffee.style.left = Math.random() * 100 + 'vw';
+            coffee.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+            document.body.appendChild(coffee);
+
+            setTimeout(() => {
+                coffee.remove();
+            }, 6000);
+        }
+
+        // Update initialization
+        function initializeCoffees() {
+            for(let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createBackgroundCoffee();
+                }, i * 200);
+            }
+            setInterval(createBackgroundCoffee, 500);
+        }
+
+        // Remove duplicate interval
+        document.addEventListener('DOMContentLoaded', initializeCoffees);
+
+        function showAlert(message) {
+            const alert = document.getElementById('customAlert');
+            const alertMessage = document.getElementById('alertMessage');
+            alertMessage.textContent = message;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                alert.style.animation = 'fadeOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                    alert.style.animation = '';
+                }, 300);
+            }, 3000);
+        }
+
+        function continueTo() {
+            if (!selectedCoffee) {
+                showAlert('Please select a coffee first! ☕');
+                return;
+            }
+            
+            const coffeeName = selectedCoffee.querySelector('.coffee-name').textContent;
+            localStorage.setItem('selectedCoffee', coffeeName);
+            window.location.href = 'excited.html';
+        }
+    </script>
+</body>
+</html>

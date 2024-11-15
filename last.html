@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>See You Soon!</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #fff1f4;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            padding: 2rem;
+        }
+
+        .cat-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(255, 77, 109, 0.2);
+            border: 5px solid white;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(255, 77, 109, 0.3);
+        }
+
+        .date {
+            color: #ff4d6d;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(255, 77, 109, 0.2);
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .view-receipt-btn {
+            background: #ff4d6d;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            width: 200px;
+            text-align: center;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-receipt-btn::after {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            transition: 0.7s;
+            z-index: 1;
+        }
+
+        .view-receipt-btn:hover {
+            transform: translateY(-3px);
+            background: white;
+            color: #ff4d6d;
+        }
+
+        .view-receipt-btn:hover::after {
+            left: 100%;
+        }
+
+        .view-receipt-btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Background decorations */
+        .decoration {
+            position: absolute;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+            font-size: 2rem;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        /* Updated modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(255, 77, 109, 0.3);
+            animation: modalPop 0.3s ease-out;
+            border: 2px solid rgba(255, 77, 109, 0.1);
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(45deg, #ff4d6d, #ff758c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-family: Arial, sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 0 1rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #ff4d6d;
+            transition: all 0.3s ease;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            background: #fff1f4;
+            transform: rotate(90deg);
+        }
+
+        /* Updated receipt styles */
+        .receipt-text {
+            background: #fff1f4;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            font-family: 'Arial', sans-serif;
+            font-size: 1.2rem;
+            line-height: 2;
+            white-space: pre;
+            box-shadow: inset 0 2px 15px rgba(255, 77, 109, 0.15);
+            border: 2px solid rgba(255, 77, 109, 0.2);
+            color: #ff4d6d;
+        }
+
+        /* Add these media queries at the end of your existing styles */
+
+        /* For tablets and smaller screens */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .cat-image {
+                width: 250px;
+                height: 250px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .date {
+                font-size: 1.5rem;
+            }
+
+            .decoration {
+                font-size: 1.5rem;
+            }
+
+            .modal-content {
+                width: 85%;
+                padding: 1.5rem;
+            }
+
+            .modal-header {
+                font-size: 1.2rem;
+            }
+
+            .receipt-text {
+                padding: 1.5rem;
+                font-size: 1rem;
+                line-height: 1.8;
+            }
+
+            .close-btn {
+                top: 15px;
+                right: 20px;
+                font-size: 1.5rem;
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        /* For mobile phones */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .cat-image {
+                width: 200px;
+                height: 200px;
+                border-width: 3px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .date {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .view-receipt-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+                width: 180px;
+            }
+
+            .decoration {
+                font-size: 1.2rem;
+            }
+
+            /* Hide some decorations on mobile */
+            .decoration:nth-child(4),
+            .decoration:nth-child(5),
+            .decoration:nth-child(6) {
+                display: none;
+            }
+
+            .modal-content {
+                width: 90%;
+                padding: 1.2rem;
+                border-radius: 20px;
+            }
+
+            .modal-header {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .receipt-text {
+                padding: 1rem;
+                font-size: 0.9rem;
+                line-height: 1.6;
+                border-radius: 15px;
+            }
+
+            .close-btn {
+                top: 10px;
+                right: 15px;
+                font-size: 1.2rem;
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        /* For very small screens */
+        @media screen and (max-width: 320px) {
+            .cat-image {
+                width: 180px;
+                height: 180px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .date {
+                font-size: 1rem;
+            }
+
+            .view-receipt-btn {
+                width: 160px;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                padding: 1rem;
+            }
+
+            .receipt-text {
+                padding: 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Fix for modal on mobile */
+        @supports (-webkit-touch-callout: none) {
+            /* CSS specific to iOS devices */
+            .modal {
+                position: absolute;
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
+            }
+        }
+
+        .credit {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 0.9rem;
+            color: #ff4d6d;
+            opacity: 0.8;
+            text-shadow: 1px 1px 2px rgba(255, 77, 109, 0.2);
+            z-index: 1000;
+        }
+
+        /* Mobile responsiveness for credit */
+        @media screen and (max-width: 768px) {
+            .credit {
+                font-size: 0.8rem;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+
+        /* Add scrollable container for content */
+        .content-wrapper {
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+            padding: 1rem;
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="images/cute.gif" alt="Cute Cat" class="cat-image">
+        <h1>See you soon! ❤️</h1>
+        <p class="date">Don't forget on 2024-11-14 at 06:10</p>
+        <div class="button-container">
+            <a href="#" class="view-receipt-btn" onclick="viewReceipt()">
+                <span>View Receipt <br>⸜(｡˃ ᵕ ˂ )⸝</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Add decorative elements -->
+    <div class="decoration" style="top: 10%; left: 10%">❤️</div>
+    <div class="decoration" style="top: 20%; right: 15%">⭐</div>
+    <div class="decoration" style="bottom: 15%; left: 20%">🎀</div>
+    <div class="decoration" style="bottom: 25%; right: 10%">❤️</div>
+    <div class="decoration" style="top: 40%; left: 85%">⭐</div>
+    <div class="decoration" style="bottom: 40%; right: 85%">🎀</div>
+
+    <!-- Updated modal HTML -->
+    <div class="modal" id="receiptModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <div class="modal-header">
+                Screenshot and send to Master Sakyo ✨
+            </div>
+            <div class="receipt-text" id="receiptContent">
+            </div>
+        </div>
+    </div>
+
+    <div class="credit">By: Master Sakyo</div>
+
+    <script>
+        function viewReceipt() {
+            // Get all stored data with proper formatting
+            const date = formatDateTime(
+                localStorage.getItem('selectedDate'), 
+                localStorage.getItem('selectedTime')
+            );
+            const food = localStorage.getItem('selectedFood');
+            const coffee = localStorage.getItem('selectedCoffee');
+            const excitement = localStorage.getItem('excitementRating');
+
+            // Create receipt content with modern formatting
+            const receipt = `
+🌸 Date Planning Receipt 🌸
+
+📅 Date: ${date}
+🍽️ Food: ${food || 'Not selected'}
+☕ Coffee: ${coffee || 'Not selected'}
+💖 Excitement Level: ${excitement || '0'}%`;
+
+            // Show modal with receipt
+            const modal = document.getElementById('receiptModal');
+            const receiptContent = document.getElementById('receiptContent');
+            receiptContent.textContent = receipt;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('receiptModal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('receiptModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Helper function to format date and time
+        function formatDateTime(date, time) {
+            if (!date || !time) return 'Not selected';
+            
+            const dateObj = new Date(`${date}T${time}`);
+            const options = { 
+                weekday: 'long',
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            
+            return dateObj.toLocaleDateString('en-US', options);
+        }
+    </script>
+</body>
+</html>
