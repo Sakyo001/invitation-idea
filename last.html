@@ -394,7 +394,7 @@
     <div class="container">
         <img src="images/cute.gif" alt="Cute Cat" class="cat-image">
         <h1>See you soon! ❤️</h1>
-        <p class="date">Don't forget on 2024-11-14 at 06:10</p>
+        <p class="date" id="dateDisplay">Don't forget on <span id="selectedDateTime">loading...</span></p>
         <div class="button-container">
             <a href="#" class="view-receipt-btn" onclick="viewReceipt()">
                 <span>View Receipt <br>⸜(｡˃ ᵕ ˂ )⸝</span>
@@ -480,6 +480,32 @@
             
             return dateObj.toLocaleDateString('en-US', options);
         }
+
+        // Add this function to format and display the date/time
+        function updateDateTime() {
+            const date = localStorage.getItem('selectedDate');
+            const time = localStorage.getItem('selectedTime');
+            
+            if (date && time) {
+                const dateObj = new Date(`${date}T${time}`);
+                const options = { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                };
+                
+                const formattedDateTime = dateObj.toLocaleDateString('en-US', options);
+                document.getElementById('selectedDateTime').textContent = formattedDateTime;
+            } else {
+                document.getElementById('selectedDateTime').textContent = 'date and time not set';
+            }
+        }
+
+        // Call this when the page loads
+        document.addEventListener('DOMContentLoaded', updateDateTime);
     </script>
 </body>
 </html>

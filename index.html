@@ -164,24 +164,24 @@
         /* Base click-me-btn styles */
         .click-me-btn {
             background: #ff4d6d;
-            padding: 15px 30px;
+            padding: 20px 40px;
             border-radius: 50px;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             cursor: pointer;
             border: none;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
-            width: 90%;
-            max-width: 600px;
+            width: 95%;
+            max-width: 800px;
             font-family: monospace;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             white-space: nowrap;
             position: relative;
             overflow: hidden;
             z-index: 1;
-            margin: 0 auto;
+            margin: 20px auto;
             display: block;
             animation: pulse 2s infinite;
         }
@@ -206,17 +206,17 @@
             }
 
             .click-me-btn {
-                font-size: 0.8rem;
-                padding: 12px 15px;
-                letter-spacing: 1px;
-                width: 85%;
-                max-width: 300px;
-                margin: 10px auto;
+                font-size: 1rem;
+                padding: 15px 20px;
+                letter-spacing: 2px;
+                width: 90%;
+                max-width: 400px;
+                margin: 15px auto;
             }
 
             .click-me-btn::before {
                 content: '─♡─CLICK ME─♡─';
-                font-size: 0.8rem;
+                font-size: 1rem;
             }
         }
 
@@ -227,15 +227,15 @@
             }
 
             .click-me-btn {
-                font-size: 0.7rem;
-                padding: 10px;
-                letter-spacing: 0.5px;
+                font-size: 0.9rem;
+                padding: 12px;
+                letter-spacing: 1px;
                 width: 80%;
             }
 
             .click-me-btn::before {
                 content: '♡ CLICK ME ♡';
-                font-size: 0.7rem;
+                font-size: 0.9rem;
             }
         }
 
@@ -295,15 +295,15 @@
         /* Mobile-specific adjustments */
         @media screen and (max-width: 768px) {
             .click-me-btn {
-                font-size: 0.9rem;
-                padding: 12px 20px;
-                letter-spacing: 1px;
-                width: 85%;
+                font-size: 1rem;
+                padding: 15px 20px;
+                letter-spacing: 2px;
+                width: 90%;
             }
 
             .click-me-btn::before {
                 content: '──■■██─♡─CLICK ME─♡─██■■──';
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
 
             /* Adjust floating hearts position for mobile */
@@ -350,35 +350,37 @@
             }
 
             .click-me-btn {
-                font-size: 0.8rem; /* Smaller font */
-                padding: 12px 15px;
-                letter-spacing: 1px;
-                width: 85%;
-                max-width: 300px; /* Limit width on mobile */
+                font-size: 1.2rem;
+                padding: 15px 25px;
+                letter-spacing: 2px;
+                width: 90%;
+                max-width: 350px;
+                margin: 20px auto;
             }
 
             .click-me-btn::before {
-                content: '─♡─CLICK ME─♡─'; /* Shorter text for mobile */
-                font-size: 0.8rem;
+                content: '─♡─CLICK ME─♡─';
+                font-size: 1.2rem;
             }
 
-            /* Adjust image size for mobile */
             #happyCat img {
-                width: 80%;
-                max-width: 250px;
+                width: 85%;
+                max-width: 280px;
             }
         }
 
         /* Add styles for very small screens */
         @media screen and (max-width: 380px) {
             .click-me-btn {
-                font-size: 0.7rem;
-                padding: 10px;
-                letter-spacing: 0.5px;
+                font-size: 1rem;
+                padding: 12px 20px;
+                letter-spacing: 1px;
+                width: 85%;
             }
 
             .click-me-btn::before {
                 content: '♡ CLICK ME ♡';
+                font-size: 1rem;
             }
 
             .happy-message {
