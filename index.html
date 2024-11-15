@@ -161,6 +161,7 @@
             font-weight: bold;
         }
 
+        /* Base click-me-btn styles */
         .click-me-btn {
             background: #ff4d6d;
             padding: 15px 30px;
@@ -180,6 +181,9 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            margin: 0 auto;
+            display: block;
+            animation: pulse 2s infinite;
         }
 
         .click-me-btn::before {
@@ -193,36 +197,45 @@
             z-index: 2;
         }
 
-        /* Wave effect */
-        .click-me-btn::after {
-            content: '';
-            position: absolute;
-            left: -100%;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                white,
-                transparent
-            );
-            transition: 0.7s;
-            z-index: 1;
+        /* Remove duplicate media queries and combine them */
+        @media screen and (max-width: 768px) {
+            .happy-message {
+                font-size: 2rem;
+                padding: 0 20px;
+                margin: 15px 0;
+            }
+
+            .click-me-btn {
+                font-size: 0.8rem;
+                padding: 12px 15px;
+                letter-spacing: 1px;
+                width: 85%;
+                max-width: 300px;
+                margin: 10px auto;
+            }
+
+            .click-me-btn::before {
+                content: '─♡─CLICK ME─♡─';
+                font-size: 0.8rem;
+            }
         }
 
-        /* Floating hearts */
-        @keyframes floatHeart {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
+        /* Smaller screens */
+        @media screen and (max-width: 380px) {
+            .happy-message {
+                font-size: 1.8rem;
             }
-            50% {
-                opacity: 0.7;
+
+            .click-me-btn {
+                font-size: 0.7rem;
+                padding: 10px;
+                letter-spacing: 0.5px;
+                width: 80%;
             }
-            100% {
-                transform: translateY(-100vh) scale(1.5);
-                opacity: 0;
+
+            .click-me-btn::before {
+                content: '♡ CLICK ME ♡';
+                font-size: 0.7rem;
             }
         }
 
@@ -323,6 +336,55 @@
                 right: 10px;
             }
         }
+
+        /* Update mobile styles */
+        @media screen and (max-width: 768px) {
+            .question {
+                font-size: 2rem;
+                padding: 0 20px;
+            }
+
+            .happy-message {
+                font-size: 2rem;
+                padding: 0 20px;
+            }
+
+            .click-me-btn {
+                font-size: 0.8rem; /* Smaller font */
+                padding: 12px 15px;
+                letter-spacing: 1px;
+                width: 85%;
+                max-width: 300px; /* Limit width on mobile */
+            }
+
+            .click-me-btn::before {
+                content: '─♡─CLICK ME─♡─'; /* Shorter text for mobile */
+                font-size: 0.8rem;
+            }
+
+            /* Adjust image size for mobile */
+            #happyCat img {
+                width: 80%;
+                max-width: 250px;
+            }
+        }
+
+        /* Add styles for very small screens */
+        @media screen and (max-width: 380px) {
+            .click-me-btn {
+                font-size: 0.7rem;
+                padding: 10px;
+                letter-spacing: 0.5px;
+            }
+
+            .click-me-btn::before {
+                content: '♡ CLICK ME ♡';
+            }
+
+            .happy-message {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -331,9 +393,8 @@
     <div id="happyCat" style="display: none; text-align: center;">
         <img src="images/happy.gif" alt="Happy cat" style="width: 300px; border-radius: 10px; margin-bottom: 20px;">
         <div class="happy-message">YEAYYY!!! DONT GO ANYWHERE</div>
-        <button class="click-me-btn" onmouseover="createHearts(this)" onclick="window.location.href='date.html'">
-            ──■■██░░░─♡─CLICK ME─♡─░░░██■■──
-            <div class="heart-container"></div>
+        <button class="click-me-btn" onclick="window.location.href='date.html'">
+            <!-- Remove the heart container -->
         </button>
     </div>
 
@@ -405,36 +466,6 @@
                 sadCatDiv.style.display = 'none';
             }, 3000);
         }
-
-        function createHearts(button) {
-            const container = button.querySelector('.heart-container');
-            
-            // Create hearts on both sides
-            for (let side of ['left', 'right']) {
-                const heart = document.createElement('div');
-                heart.className = 'floating-heart';
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-                
-                container.appendChild(heart);
-                
-                // Remove heart after animation
-                setTimeout(() => {
-                    heart.remove();
-                }, 6000);
-            }
-        }
-
-        // Create hearts every 300ms while hovering
-        let heartInterval;
-        document.querySelector('.click-me-btn').addEventListener('mouseover', function() {
-            heartInterval = setInterval(() => createHearts(this), 300);
-        });
-
-        document.querySelector('.click-me-btn').addEventListener('mouseout', function() {
-            clearInterval(heartInterval);
-        });
     </script>
 </body>
 </html>
