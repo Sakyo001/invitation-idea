@@ -382,5 +382,202 @@
         // Call this immediately when the page loads
         document.addEventListener('DOMContentLoaded', initializeHearts);
     </script>
-</body>
-</html>
+
+    <!-- Spotify Style Music Player -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .spotify-player {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #191414;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-family: Arial, sans-serif;
+        }
+
+        .track-info {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .track-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+
+        .track-artist {
+            font-size: 0.75rem;
+            color: #b3b3b3;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #b3b3b3;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            margin: 0;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        .control-btn:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .play-pause-btn {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .progress-container {
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            height: 4px;
+            background: #535353;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #1db954;
+            transition: width 0.1s linear;
+        }
+
+        @media (max-width: 768px) {
+            .spotify-player {
+                bottom: 10px;
+                width: 95%;
+                padding: 12px;
+                gap: 10px;
+            }
+
+            .track-title {
+                font-size: 0.8rem;
+            }
+
+            .track-artist {
+                font-size: 0.7rem;
+            }
+
+            .control-btn {
+                font-size: 1rem;
+            }
+
+            .play-pause-btn {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .spotify-player {
+                bottom: 8px;
+                padding: 10px;
+                gap: 8px;
+                max-width: 95vw;
+            }
+
+            .track-title {
+                font-size: 0.75rem;
+            }
+
+            .track-artist {
+                font-size: 0.65rem;
+            }
+
+            .control-btn {
+                font-size: 0.9rem;
+            }
+
+            .play-pause-btn {
+                font-size: 1rem;
+            }
+        }
+    </style>
+
+    <div class="spotify-player">
+        <div class="track-info">
+            <div class="track-title">Panaginip Lang</div>
+            <div class="track-artist">Alex Gonzaga</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+        <div class="controls">
+            <button class="control-btn"><i class="fas fa-step-backward"></i></button>
+            <button class="control-btn play-pause-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
+            <button class="control-btn"><i class="fas fa-step-forward"></i></button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="Panaginip Lang - Alex Gonzaga (Lyrics).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const bgMusic = document.getElementById('bgMusic');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressBar = document.getElementById('progressBar');
+        const icon = playPauseBtn.querySelector('i');
+        let isPlaying = false;
+
+        function togglePlay() {
+            if (isPlaying) {
+                bgMusic.pause();
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+            } else {
+                bgMusic.play().then(() => {
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                }).catch(error => {
+                    console.log("Autoplay blocked or failed:", error);
+                });
+            }
+            isPlaying = !isPlaying;
+        }
+
+        playPauseBtn.addEventListener('click', togglePlay);
+
+        bgMusic.addEventListener('timeupdate', () => {
+            const progress = (bgMusic.currentTime / bgMusic.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        });
+
+        window.addEventListener('load', () => {
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                icon.classList.remove('fa-play');
+                icon.classList.add('fa-pause');
+            }).catch(() => {
+                console.log("Autoplay prevented pending user interaction");
+            });
+        });
+    </script>
