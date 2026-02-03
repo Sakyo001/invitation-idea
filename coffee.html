@@ -255,8 +255,77 @@
         @media screen and (max-width: 768px) {
             .credit {
                 font-size: 0.8rem;
-                bottom: 10px;
+                bottom: 60px;
                 right: 10px;
+            }
+
+            body {
+                padding: 1.5rem 1rem;
+                padding-bottom: 100px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .coffee-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .coffee-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .coffee-name {
+                font-size: 1rem;
+            }
+
+            .continue-btn {
+                width: 180px;
+                font-size: 1.1rem;
+                padding: 12px 25px;
+                margin: 2rem auto 1rem;
+            }
+
+            .background-coffee {
+                font-size: 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.5rem;
+                padding-bottom: 100px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+                padding: 0 10px;
+            }
+
+            .coffee-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .coffee-image {
+                width: 180px;
+                height: 180px;
+            }
+
+            .coffee-name {
+                font-size: 1.1rem;
+            }
+
+            .continue-btn {
+                width: 90%;
+                max-width: 250px;
             }
         }
     </style>
@@ -266,19 +335,19 @@
 
     <div class="coffee-grid">
         <div class="coffee-item" onclick="selectCoffee(this)">
-            <img src="images/americano.jpg" alt="Americano" class="coffee-image">
+            <img src="images/americano.jpg" alt="Americano" class="coffee-image" loading="lazy">
             <div class="coffee-name">Americano</div>
         </div>
         <div class="coffee-item" onclick="selectCoffee(this)">
-            <img src="images/latte.jpg" alt="Latte" class="coffee-image">
+            <img src="images/latte.jpg" alt="Latte" class="coffee-image" loading="lazy">
             <div class="coffee-name">Latte</div>
         </div>
         <div class="coffee-item" onclick="selectCoffee(this)">
-            <img src="images/capp.jpg" alt="Cappuccino" class="coffee-image">
+            <img src="images/capp.jpg" alt="Cappuccino" class="coffee-image" loading="lazy">
             <div class="coffee-name">Cappuccino</div>
         </div>
         <div class="coffee-item" onclick="selectCoffee(this)">
-            <img src="images/mocca.jpg" alt="Mocha" class="coffee-image">
+            <img src="images/mocca.jpg" alt="Mocha" class="coffee-image" loading="lazy">
             <div class="coffee-name">Mocha</div>
         </div>
     </div>

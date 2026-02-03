@@ -204,6 +204,11 @@
 
         /* For tablets and smaller screens */
         @media screen and (max-width: 768px) {
+            body {
+                padding: 1.5rem 1rem;
+                padding-bottom: 100px;
+            }
+
             .container {
                 padding: 1rem;
             }
@@ -211,6 +216,7 @@
             .cat-image {
                 width: 250px;
                 height: 250px;
+                margin-bottom: 1.5rem;
             }
 
             h1 {
@@ -219,10 +225,17 @@
 
             .date {
                 font-size: 1.5rem;
+                word-break: break-word;
             }
 
             .decoration {
                 font-size: 1.5rem;
+            }
+
+            .view-receipt-btn {
+                width: 180px;
+                font-size: 1.1rem;
+                padding: 12px 25px;
             }
 
             .modal-content {
@@ -253,6 +266,7 @@
         @media screen and (max-width: 480px) {
             body {
                 padding: 1rem;
+                padding-bottom: 100px;
             }
 
             .container {
@@ -392,7 +406,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="images/cute.gif" alt="Cute Cat" class="cat-image">
+        <img src="images/cute.gif" alt="Cute Cat" class="cat-image" loading="lazy">
         <h1>See you soon! ❤️</h1>
         <p class="date" id="dateDisplay">Don't forget on <span id="selectedDateTime">loading...</span></p>
         <div class="button-container">

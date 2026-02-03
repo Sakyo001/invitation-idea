@@ -200,8 +200,67 @@
         @media screen and (max-width: 768px) {
             .credit {
                 font-size: 0.8rem;
-                bottom: 10px;
+                bottom: 60px;
                 right: 10px;
+            }
+
+            body {
+                padding: 1.5rem;
+                padding-bottom: 100px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .heart-left,
+            .heart-right {
+                font-size: 1.5rem;
+            }
+
+            .heart-left {
+                top: 15%;
+                left: 5%;
+            }
+
+            .heart-right {
+                top: 70%;
+                right: 5%;
+            }
+
+            .date-container {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            input {
+                width: 100%;
+                font-size: 1rem;
+            }
+
+            .click-me-btn {
+                width: 180px;
+                font-size: 1.1rem;
+                padding: 12px 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+                padding-bottom: 100px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .click-me-btn {
+                width: 90%;
+                max-width: 250px;
             }
         }
     </style>

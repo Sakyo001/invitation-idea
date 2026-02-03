@@ -255,8 +255,73 @@
         @media screen and (max-width: 768px) {
             .credit {
                 font-size: 0.8rem;
-                bottom: 10px;
+                bottom: 60px;
                 right: 10px;
+            }
+
+            body {
+                padding: 1.5rem 1rem;
+                padding-bottom: 100px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .food-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .food-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .food-name {
+                font-size: 1rem;
+            }
+
+            .continue-btn {
+                width: 180px;
+                font-size: 1.1rem;
+                padding: 12px 25px;
+                margin: 2rem auto 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.5rem;
+                padding-bottom: 100px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+                padding: 0 10px;
+            }
+
+            .food-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .food-image {
+                width: 180px;
+                height: 180px;
+            }
+
+            .food-name {
+                font-size: 1.1rem;
+            }
+
+            .continue-btn {
+                width: 90%;
+                max-width: 250px;
             }
         }
     </style>
@@ -266,19 +331,19 @@
 
     <div class="food-grid">
         <div class="food-item" onclick="selectFood(this)">
-            <img src="images/sf.jpg" alt="Pancake" class="food-image">
+            <img src="images/sf.jpg" alt="Pancake" class="food-image" loading="lazy">
             <div class="food-name">Street Foods</div>
         </div>
         <div class="food-item" onclick="selectFood(this)">
-            <img src="images/mcdo.jpg" alt="Fried Rice" class="food-image">
+            <img src="images/mcdo.jpg" alt="Fried Rice" class="food-image" loading="lazy">
             <div class="food-name">Burger and Fries</div>
         </div>
         <div class="food-item" onclick="selectFood(this)">
-            <img src="images/jolli.jpg" alt="Salmon" class="food-image">
+            <img src="images/jolli.jpg" alt="Salmon" class="food-image" loading="lazy">
             <div class="food-name">Steak</div>
         </div>
         <div class="food-item" onclick="selectFood(this)">
-            <img src="images/pizza.jpg" alt="Pizza" class="food-image">
+            <img src="images/pizza.jpg" alt="Pizza" class="food-image" loading="lazy">
             <div class="food-name">Pizza</div>
         </div>
     </div>
