@@ -10,20 +10,8 @@
             min-height: 100vh;
             background: #fff1f4;
             font-family: Arial, sans-serif;
-            padding: 2rem 1rem;
-            padding-bottom: 100px;
+            padding: 2rem;
             overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-        }
-
-        .main-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         h1 {
@@ -267,73 +255,8 @@
         @media screen and (max-width: 768px) {
             .credit {
                 font-size: 0.8rem;
-                bottom: 60px;
+                bottom: 10px;
                 right: 10px;
-            }
-
-            body {
-                padding: 1.5rem 1rem;
-                padding-bottom: 100px;
-            }
-
-            h1 {
-                font-size: 2rem;
-                margin-bottom: 2rem;
-            }
-
-            .food-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-
-            .food-image {
-                width: 150px;
-                height: 150px;
-            }
-
-            .food-name {
-                font-size: 1rem;
-            }
-
-            .continue-btn {
-                width: 180px;
-                font-size: 1.1rem;
-                padding: 12px 25px;
-                margin: 2rem auto 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 1rem 0.5rem;
-                padding-bottom: 100px;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-                margin-bottom: 1.5rem;
-                padding: 0 10px;
-            }
-
-            .food-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                max-width: 300px;
-                margin: 0 auto;
-            }
-
-            .food-image {
-                width: 180px;
-                height: 180px;
-            }
-
-            .food-name {
-                font-size: 1.1rem;
-            }
-
-            .continue-btn {
-                width: 90%;
-                max-width: 250px;
             }
         }
     </style>
@@ -343,19 +266,19 @@
 
     <div class="food-grid">
         <div class="food-item" onclick="selectFood(this)">
-            <img src="images/sf.jpg" alt="Pancake" class="food-image" loading="lazy">
+            <img src="images/sf.jpg" alt="Pancake" class="food-image">
             <div class="food-name">Street Foods</div>
         </div>
         <div class="food-item" onclick="selectFood(this)">
-            <img src="images/mcdo.jpg" alt="Fried Rice" class="food-image" loading="lazy">
+            <img src="images/mcdo.jpg" alt="Fried Rice" class="food-image">
             <div class="food-name">Burger and Fries</div>
         </div>
         <div class="food-item" onclick="selectFood(this)">
-            <img src="images/jolli.jpg" alt="Salmon" class="food-image" loading="lazy">
+            <img src="images/jolli.jpg" alt="Salmon" class="food-image">
             <div class="food-name">Steak</div>
         </div>
         <div class="food-item" onclick="selectFood(this)">
-            <img src="images/pizza.jpg" alt="Pizza" class="food-image" loading="lazy">
+            <img src="images/pizza.jpg" alt="Pizza" class="food-image">
             <div class="food-name">Pizza</div>
         </div>
     </div>
@@ -459,238 +382,5 @@
         // Call this immediately when the page loads
         document.addEventListener('DOMContentLoaded', initializeHearts);
     </script>
-
-    <!-- Spotify Style Music Player -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .spotify-player {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            transform: none;
-            background: #191414;
-            width: 100%;
-            max-width: 100%;
-            border-radius: 0;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: white;
-            z-index: 9999;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
-            font-family: Arial, sans-serif;
-        }
-
-        .track-info {
-            flex-grow: 1;
-            overflow: hidden;
-        }
-
-        .track-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 2px;
-        }
-
-        .track-artist {
-            font-size: 0.75rem;
-            color: #b3b3b3;
-        }
-
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .control-btn {
-            background: none;
-            border: none;
-            color: #b3b3b3;
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0;
-            margin: 0;
-            box-shadow: none;
-            border-radius: 0;
-        }
-
-        .control-btn:hover {
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .play-pause-btn {
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .progress-container {
-            position: absolute;
-            bottom: 0;
-            left: 15px;
-            right: 15px;
-            height: 4px;
-            background: #535353;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: #1db954;
-            transition: width 0.1s linear;
-        }
-
-        @media (max-width: 768px) {
-            .spotify-player {
-                bottom: 0;
-                width: 100%;
-                padding: 10px 15px;
-                gap: 10px;
-                border-radius: 0;
-            }
-
-            .track-title {
-                font-size: 0.8rem;
-            }
-
-            .track-artist {
-                font-size: 0.7rem;
-            }
-
-            .control-btn {
-                font-size: 1rem;
-            }
-
-            .play-pause-btn {
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .spotify-player {
-                bottom: 0;
-                padding: 8px 10px;
-                gap: 8px;
-                width: 100%;
-            }
-
-            .track-title {
-                font-size: 0.7rem;
-            }
-
-            .track-artist {
-                font-size: 0.6rem;
-            }
-
-            .control-btn {
-                font-size: 0.85rem;
-            }
-
-            .play-pause-btn {
-                font-size: 1rem;
-            }
-        }
-    </style>
-
-    <div class="spotify-player">
-        <div class="track-info">
-            <div class="track-title">Panaginip Lang</div>
-            <div class="track-artist">Alex Gonzaga</div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-        </div>
-        <div class="controls">
-            <button class="control-btn"><i class="fas fa-step-backward"></i></button>
-            <button class="control-btn play-pause-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
-            <button class="control-btn"><i class="fas fa-step-forward"></i></button>
-        </div>
-    </div>
-
-    <audio id="bgMusic" loop>
-        <source src="Panaginip Lang - Alex Gonzaga (Lyrics).mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <script>
-        const bgMusic = document.getElementById('bgMusic');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const progressBar = document.getElementById('progressBar');
-        const icon = playPauseBtn.querySelector('i');
-        let isPlaying = false;
-
-        // Restore audio state from localStorage
-        function restoreAudioState() {
-            const savedTime = localStorage.getItem('audioCurrentTime');
-            const savedPlaying = localStorage.getItem('audioIsPlaying');
-            
-            if (savedTime) {
-                bgMusic.currentTime = parseFloat(savedTime);
-            }
-            
-            if (savedPlaying === 'true') {
-                bgMusic.play().then(() => {
-                    isPlaying = true;
-                    icon.classList.remove('fa-play');
-                    icon.classList.add('fa-pause');
-                }).catch(error => {
-                    console.log("Autoplay blocked:", error);
-                });
-            } else {
-                bgMusic.play().then(() => {
-                    isPlaying = true;
-                    icon.classList.remove('fa-play');
-                    icon.classList.add('fa-pause');
-                    localStorage.setItem('audioIsPlaying', 'true');
-                }).catch(() => {
-                    console.log("Autoplay prevented");
-                });
-            }
-        }
-
-        // Save audio state to localStorage
-        function saveAudioState() {
-            localStorage.setItem('audioCurrentTime', bgMusic.currentTime.toString());
-            localStorage.setItem('audioIsPlaying', isPlaying.toString());
-        }
-
-        function togglePlay() {
-            if (isPlaying) {
-                bgMusic.pause();
-                icon.classList.remove('fa-pause');
-                icon.classList.add('fa-play');
-            } else {
-                bgMusic.play().then(() => {
-                    icon.classList.remove('fa-play');
-                    icon.classList.add('fa-pause');
-                }).catch(error => {
-                    console.log("Autoplay blocked or failed:", error);
-                });
-            }
-            isPlaying = !isPlaying;
-            saveAudioState();
-        }
-
-        playPauseBtn.addEventListener('click', togglePlay);
-
-        bgMusic.addEventListener('timeupdate', () => {
-            const progress = (bgMusic.currentTime / bgMusic.duration) * 100;
-            progressBar.style.width = `${progress}%`;
-            if (Math.floor(bgMusic.currentTime) % 2 === 0) {
-                saveAudioState();
-            }
-        });
-
-        window.addEventListener('beforeunload', saveAudioState);
-
-        window.addEventListener('load', () => {
-            restoreAudioState();
-        });
-    </script>
+</body>
+</html>
