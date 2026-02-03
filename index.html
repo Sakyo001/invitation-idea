@@ -7,16 +7,28 @@
     <style>
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             background: linear-gradient(45deg, #ff6b6b, #ffd3d3);
             font-family: Arial, sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
             box-sizing: border-box;
+            padding: 2rem 1rem;
+            padding-bottom: 80px;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .question {
@@ -25,13 +37,18 @@
             text-align: center;
             margin-bottom: 2rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            padding: 0 1rem;
         }
 
         .buttons {
             display: flex;
             gap: 1rem;
             justify-content: center;
+            align-items: center;
             margin-top: 20px;
+            width: 100%;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -199,6 +216,30 @@
 
         /* Remove duplicate media queries and combine them */
         @media screen and (max-width: 768px) {
+            body {
+                padding: 1.5rem 1rem;
+                padding-bottom: 100px;
+            }
+
+            .question {
+                font-size: 2rem;
+                padding: 0 1rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                padding: 0 1rem;
+            }
+
+            .btn {
+                padding: 0.8rem 2rem;
+                font-size: 1.1rem;
+                width: 100%;
+                max-width: 250px;
+            }
+
             .happy-message {
                 font-size: 2rem;
                 padding: 0 20px;
@@ -221,7 +262,21 @@
         }
 
         /* Smaller screens */
-        @media screen and (max-width: 380px) {
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 1rem;
+                padding-bottom: 100px;
+            }
+
+            .question {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+            }
+
             .happy-message {
                 font-size: 1.8rem;
             }
@@ -230,7 +285,7 @@
                 font-size: 0.9rem;
                 padding: 12px;
                 letter-spacing: 1px;
-                width: 80%;
+                width: 90%;
             }
 
             .click-me-btn::before {
@@ -505,20 +560,20 @@
     <style>
         .spotify-player {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 0;
+            left: 0;
+            transform: none;
             background: #191414;
-            width: 90%;
-            max-width: 400px;
-            border-radius: 15px;
+            width: 100%;
+            max-width: 100%;
+            border-radius: 0;
             padding: 15px;
             display: flex;
             align-items: center;
             gap: 15px;
             color: white;
-            z-index: 100;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9999;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
             font-family: Arial, sans-serif;
         }
 
@@ -589,10 +644,11 @@
 
         @media (max-width: 768px) {
             .spotify-player {
-                bottom: 10px;
-                width: 95%;
-                padding: 12px;
+                bottom: 0;
+                width: 100%;
+                padding: 10px 15px;
                 gap: 10px;
+                border-radius: 0;
             }
 
             .track-title {
@@ -614,22 +670,22 @@
 
         @media (max-width: 480px) {
             .spotify-player {
-                bottom: 8px;
-                padding: 10px;
+                bottom: 0;
+                padding: 8px 10px;
                 gap: 8px;
-                max-width: 95vw;
+                width: 100%;
             }
 
             .track-title {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
             }
 
             .track-artist {
-                font-size: 0.65rem;
+                font-size: 0.6rem;
             }
 
             .control-btn {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
 
             .play-pause-btn {
@@ -665,6 +721,42 @@
         const icon = playPauseBtn.querySelector('i');
         let isPlaying = false;
 
+        // Restore audio state from localStorage
+        function restoreAudioState() {
+            const savedTime = localStorage.getItem('audioCurrentTime');
+            const savedPlaying = localStorage.getItem('audioIsPlaying');
+            
+            if (savedTime) {
+                bgMusic.currentTime = parseFloat(savedTime);
+            }
+            
+            if (savedPlaying === 'true') {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                }).catch(error => {
+                    console.log("Autoplay blocked:", error);
+                });
+            } else {
+                // Try autoplay even if not previously playing
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                    localStorage.setItem('audioIsPlaying', 'true');
+                }).catch(() => {
+                    console.log("Autoplay prevented");
+                });
+            }
+        }
+
+        // Save audio state to localStorage
+        function saveAudioState() {
+            localStorage.setItem('audioCurrentTime', bgMusic.currentTime.toString());
+            localStorage.setItem('audioIsPlaying', isPlaying.toString());
+        }
+
         function togglePlay() {
             if (isPlaying) {
                 bgMusic.pause();
@@ -679,6 +771,7 @@
                 });
             }
             isPlaying = !isPlaying;
+            saveAudioState();
         }
 
         playPauseBtn.addEventListener('click', togglePlay);
@@ -686,16 +779,18 @@
         bgMusic.addEventListener('timeupdate', () => {
             const progress = (bgMusic.currentTime / bgMusic.duration) * 100;
             progressBar.style.width = `${progress}%`;
+            // Periodically save the current time
+            if (Math.floor(bgMusic.currentTime) % 2 === 0) {
+                saveAudioState();
+            }
         });
 
+        // Save state before page unload
+        window.addEventListener('beforeunload', saveAudioState);
+
+        // Restore state on load
         window.addEventListener('load', () => {
-            bgMusic.play().then(() => {
-                isPlaying = true;
-                icon.classList.remove('fa-play');
-                icon.classList.add('fa-pause');
-            }).catch(() => {
-                console.log("Autoplay prevented pending user interaction");
-            });
+            restoreAudioState();
         });
     </script>
 
